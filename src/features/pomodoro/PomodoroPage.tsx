@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import type { PomodoroMode, PomodoroSettings, Task } from '../../types';
+import type { PomodoroSettings } from '../../types';
 import { useApp } from '../../stores/AppContext';
 import { TimeSlider } from '../../components/TimeSlider';
 
