@@ -10,7 +10,13 @@
       "Bash(gh:*)",
       "Bash(git remote add:*)",
       "Bash(git branch:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(npm install:*)",
+      "Bash(vercel --yes:*)",
+      "Bash(vercel login)",
+      "Bash(if exist \".vercel\" rmdir /s /q \".vercel\")",
+      "Bash(vercel --prod)",
+      "Bash(vercel:*)"
     ],
     "deny": [],
     "ask": []

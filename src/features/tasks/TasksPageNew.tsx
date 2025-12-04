@@ -67,9 +67,19 @@ export const TasksPageNew = () => {
       </div>
 
       {/* 主要內容區 - 響應式雙欄布局 */}
-      <div className="calendar-container">
+      <div className="calendar-container" style={{
+        display: 'flex',
+        gap: '1.5rem',
+        alignItems: 'start',
+        width: '100%',
+        boxSizing: 'border-box',
+      }}>
         {/* 左側：月曆 */}
-        <div className="calendar">
+        <div className="calendar" style={{
+          flex: '1 1 auto',
+          minWidth: '0',
+          maxWidth: '100%',
+        }}>
           <Calendar
             tasks={state.tasks}
             selectedDate={selectedDate}
@@ -79,7 +89,10 @@ export const TasksPageNew = () => {
 
         {/* 右側：當日行程面板 */}
         {selectedDate && (
-          <div className="schedule-panel">
+          <div className="schedule-panel" style={{
+            width: '360px',
+            flexShrink: 0,
+          }}>
             <DayView
               date={selectedDate}
               tasks={state.tasks}
@@ -94,44 +107,30 @@ export const TasksPageNew = () => {
 
       {/* 響應式樣式 */}
       <style>{`
-        /* 預設布局（大螢幕 >960px）：併排，右側固定寬度 */
-        .calendar-container {
-          display: flex;
-          gap: 1.5rem;
-          align-items: start;
-        }
-
-        .calendar {
-          flex: 1;
-          min-width: 0; /* 防止 flex item 溢出 */
-        }
-
-        .schedule-panel {
-          width: 360px;
-          flex-shrink: 0;
-        }
-
-        /* 中螢幕（600px - 960px）：仍併排，但採彈性布局 */
+        /* 中螢幕（600px - 960px）：縮小右側面板 */
         @media (max-width: 960px) and (min-width: 601px) {
           .schedule-panel {
-            width: 320px; /* 稍微縮小以適應中螢幕 */
+            width: 320px !important;
           }
         }
 
         /* 小螢幕（<600px）：改為上下排列 */
         @media (max-width: 600px) {
           .calendar-container {
-            flex-direction: column; /* 改成上下排列 */
+            flex-direction: column !important;
+            gap: 1rem !important;
           }
 
           .calendar {
-            order: 1; /* 月曆優先顯示在上方 */
-            width: 100%;
+            order: 1 !important;
+            width: 100% !important;
+            flex: none !important;
           }
 
           .schedule-panel {
-            order: 2; /* 行程面板在月曆下方 */
-            width: 100%; /* 改成全寬 */
+            order: 2 !important;
+            width: 100% !important;
+            flex-shrink: 1 !important;
           }
         }
       `}</style>

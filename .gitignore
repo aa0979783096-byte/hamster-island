@@ -25,3 +25,6 @@ dist-ssr
 
 # Claude Code settings
 .claude/
+
+.vercel
+.env*.local
