@@ -14,9 +14,9 @@ export const Layout = ({ children, activeTab, onTabChange }: LayoutProps) => {
     <div style={{
       display: 'flex',
       flexDirection: 'column',
-      height: '100vh',
+      minHeight: '100vh',
       width: '100vw',
-      overflow: 'hidden',
+      overflow: 'auto',
     }}>
       {/* 標題列 */}
       <header style={{
@@ -66,9 +66,11 @@ export const Layout = ({ children, activeTab, onTabChange }: LayoutProps) => {
         flex: 1,
         width: '100%',
         padding: 'clamp(1rem, 3vw, 2rem)',
-        overflow: 'auto',
+        overflowY: 'auto',
+        overflowX: 'hidden',
         background: '#FFFAF0',
         boxSizing: 'border-box',
+        WebkitOverflowScrolling: 'touch',
       }}>
         {children}
       </main>
