@@ -67,40 +67,71 @@ export const TasksPageNew = () => {
       </div>
 
       {/* 主要內容區 - 響應式雙欄布局 */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: selectedDate
-          ? 'minmax(0, 2fr) minmax(300px, 1fr)'
-          : '1fr',
-        gap: '1.5rem',
-        alignItems: 'start',
-      }}>
+      <div className="calendar-container">
         {/* 左側：月曆 */}
-        <Calendar
-          tasks={state.tasks}
-          selectedDate={selectedDate}
-          onDateClick={handleDateClick}
-        />
-
-        {/* 右側：當日行程 */}
-        {selectedDate && (
-          <DayView
-            date={selectedDate}
+        <div className="calendar">
+          <Calendar
             tasks={state.tasks}
-            onAddTask={handleAddNewTask}
-            onTaskClick={handleEditTask}
-            onToggleTask={toggleTask}
-            onToggleSubTask={toggleSubTask}
+            selectedDate={selectedDate}
+            onDateClick={handleDateClick}
           />
+        </div>
+
+        {/* 右側：當日行程面板 */}
+        {selectedDate && (
+          <div className="schedule-panel">
+            <DayView
+              date={selectedDate}
+              tasks={state.tasks}
+              onAddTask={handleAddNewTask}
+              onTaskClick={handleEditTask}
+              onToggleTask={toggleTask}
+              onToggleSubTask={toggleSubTask}
+            />
+          </div>
         )}
       </div>
 
       {/* 響應式樣式 */}
       <style>{`
-        @media (max-width: 1024px) {
-          /* 平板尺寸：改為單欄 */
-          .tasks-page-grid {
-            grid-template-columns: 1fr !important;
+        /* 預設布局（大螢幕 >960px）：併排，右側固定寬度 */
+        .calendar-container {
+          display: flex;
+          gap: 1.5rem;
+          align-items: start;
+        }
+
+        .calendar {
+          flex: 1;
+          min-width: 0; /* 防止 flex item 溢出 */
+        }
+
+        .schedule-panel {
+          width: 360px;
+          flex-shrink: 0;
+        }
+
+        /* 中螢幕（600px - 960px）：仍併排，但採彈性布局 */
+        @media (max-width: 960px) and (min-width: 601px) {
+          .schedule-panel {
+            width: 320px; /* 稍微縮小以適應中螢幕 */
+          }
+        }
+
+        /* 小螢幕（<600px）：改為上下排列 */
+        @media (max-width: 600px) {
+          .calendar-container {
+            flex-direction: column; /* 改成上下排列 */
+          }
+
+          .calendar {
+            order: 1; /* 月曆優先顯示在上方 */
+            width: 100%;
+          }
+
+          .schedule-panel {
+            order: 2; /* 行程面板在月曆下方 */
+            width: 100%; /* 改成全寬 */
           }
         }
       `}</style>
