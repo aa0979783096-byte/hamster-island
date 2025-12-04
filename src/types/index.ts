@@ -80,3 +80,39 @@ export interface Stats {
   longestStreak: number;
   pomodorosCompleted: number;
 }
+
+// 倉鼠角色類型
+export interface HamsterCharacter {
+  id: string;
+  name: string;
+  nameEn: string;
+  personality: string;
+  motto: string;
+  description: string;
+  avatar: string; // 頭像 emoji 或圖片
+  unlocked: boolean;
+  isFavorite: boolean;
+  chapterUnlocked: number; // 哪一章解鎖
+}
+
+// 劇情碎片類型
+export interface StoryFragment {
+  id: string;
+  chapterId: string;
+  fragmentNumber: number;
+  title: string;
+  titleEn: string;
+  content: string;
+  unlocked: boolean;
+  powerCost: number; // 解鎖消耗的電力
+}
+
+// 章節類型
+export interface Chapter {
+  id: string;
+  chapterNumber: number;
+  title: string;
+  titleEn: string;
+  totalFragments: number;
+  unlockedFragments: number;
+}

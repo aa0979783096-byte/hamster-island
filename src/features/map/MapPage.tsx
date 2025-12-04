@@ -1,16 +1,84 @@
+import { useState } from 'react';
+import { HamsterVillagePage } from '../village/HamsterVillagePage';
+import { TimeGapPage } from '../story/TimeGapPage';
+
+type IslandView = 'map' | 'village' | 'timegap';
+
 export const MapPage = () => {
+  const [currentView, setCurrentView] = useState<IslandView>('map');
+
   const islands = [
-    { id: 'timegap', name: '時間縫隙', icon: '⏳', color: '#9B59B6' },
-    { id: 'village', name: '倉鼠村', icon: '🏡', color: '#FF9E5E' },
-    { id: 'leaderboard', name: '風雲榜', icon: '🏆', color: '#FFD93D' },
-    { id: 'shop', name: '商城', icon: '🛒', color: '#50C878' },
-    { id: 'dock', name: '碼頭', icon: '⛵', color: '#4A90E2' },
+    { id: 'timegap', name: '時間縫隙', icon: '⏳', color: '#9B59B6', view: 'timegap' as IslandView },
+    { id: 'village', name: '倉鼠村', icon: '🏡', color: '#FF9E5E', view: 'village' as IslandView },
+    { id: 'leaderboard', name: '風雲榜', icon: '🏆', color: '#FFD93D', view: null },
+    { id: 'shop', name: '商城', icon: '🛒', color: '#50C878', view: null },
+    { id: 'dock', name: '碼頭', icon: '⛵', color: '#4A90E2', view: null },
   ];
 
-  const handleIslandClick = (name: string) => {
-    alert(`${name} - 即將推出！`);
+  const handleIslandClick = (island: typeof islands[0]) => {
+    if (island.view) {
+      setCurrentView(island.view);
+    } else {
+      alert(`${island.name} - 即將推出！`);
+    }
   };
 
+  // 如果正在查看某個島嶼，顯示該島嶼的頁面
+  if (currentView === 'village') {
+    return (
+      <div>
+        <button
+          onClick={() => setCurrentView('map')}
+          style={{
+            position: 'fixed',
+            top: '80px',
+            left: '20px',
+            zIndex: 100,
+            padding: '0.75rem 1.5rem',
+            background: '#FF9E5E',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          }}
+        >
+          ← 返回地圖
+        </button>
+        <HamsterVillagePage />
+      </div>
+    );
+  }
+
+  if (currentView === 'timegap') {
+    return (
+      <div>
+        <button
+          onClick={() => setCurrentView('map')}
+          style={{
+            position: 'fixed',
+            top: '80px',
+            left: '20px',
+            zIndex: 100,
+            padding: '0.75rem 1.5rem',
+            background: '#9B59B6',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          }}
+        >
+          ← 返回地圖
+        </button>
+        <TimeGapPage />
+      </div>
+    );
+  }
+
+  // 地圖主頁面
   return (
     <div style={{
       width: '100%',
@@ -27,11 +95,20 @@ export const MapPage = () => {
           textAlign: 'center',
           color: '#2C5F7F',
           fontSize: '2.5rem',
-          marginBottom: '3rem',
+          marginBottom: '1rem',
           textShadow: '2px 2px 4px rgba(255,255,255,0.5)',
         }}>
           🗺️ 倉鼠島地圖
         </h2>
+
+        <p style={{
+          textAlign: 'center',
+          color: '#2C5F7F',
+          fontSize: '1.1rem',
+          marginBottom: '2rem',
+        }}>
+          探索島上的各個區域
+        </p>
 
         <div style={{
           display: 'grid',
@@ -42,7 +119,7 @@ export const MapPage = () => {
           {islands.map((island) => (
             <div
               key={island.id}
-              onClick={() => handleIslandClick(island.name)}
+              onClick={() => handleIslandClick(island)}
               style={{
                 background: 'white',
                 borderRadius: '16px',
@@ -52,6 +129,7 @@ export const MapPage = () => {
                 boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                 transition: 'all 0.3s ease',
                 border: `4px solid ${island.color}`,
+                position: 'relative',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-8px)';
@@ -62,6 +140,23 @@ export const MapPage = () => {
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
               }}
             >
+              {/* 新功能標籤 */}
+              {island.view && (
+                <div style={{
+                  position: 'absolute',
+                  top: '-10px',
+                  right: '-10px',
+                  background: '#FF6B6B',
+                  color: 'white',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '12px',
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold',
+                }}>
+                  NEW
+                </div>
+              )}
+
               <div style={{
                 fontSize: '4rem',
                 marginBottom: '1rem',
@@ -76,6 +171,15 @@ export const MapPage = () => {
               }}>
                 {island.name}
               </h3>
+
+              {/* 狀態提示 */}
+              <p style={{
+                marginTop: '0.5rem',
+                color: island.view ? '#50C878' : '#999',
+                fontSize: '0.9rem',
+              }}>
+                {island.view ? '✓ 已開放' : '即將推出'}
+              </p>
             </div>
           ))}
         </div>
@@ -88,6 +192,7 @@ export const MapPage = () => {
           fontSize: '3rem',
           opacity: 0.6,
           animation: 'float 6s ease-in-out infinite',
+          pointerEvents: 'none',
         }}>
           ☁️
         </div>
@@ -98,6 +203,7 @@ export const MapPage = () => {
           fontSize: '2.5rem',
           opacity: 0.5,
           animation: 'float 8s ease-in-out infinite',
+          pointerEvents: 'none',
         }}>
           ☁️
         </div>
@@ -108,6 +214,7 @@ export const MapPage = () => {
           fontSize: '2rem',
           opacity: 0.4,
           animation: 'float 7s ease-in-out infinite',
+          pointerEvents: 'none',
         }}>
           ☁️
         </div>
