@@ -156,6 +156,7 @@ export const Calendar = ({ tasks, selectedDate, onDateClick }: CalendarProps) =>
             <div
               key={index}
               onClick={() => onDateClick(day.date)}
+              className="calendar-day"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -240,6 +241,24 @@ export const Calendar = ({ tasks, selectedDate, onDateClick }: CalendarProps) =>
           );
         })}
       </div>
+
+      {/* 響應式樣式 */}
+      <style>{`
+        /* 手機版：縮小日期格子高度 */
+        @media (max-width: 600px) {
+          .calendar-day {
+            min-height: 60px !important;
+            padding: 0.25rem !important;
+          }
+        }
+
+        /* 平板版：稍微縮小 */
+        @media (min-width: 601px) and (max-width: 960px) {
+          .calendar-day {
+            min-height: 80px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
