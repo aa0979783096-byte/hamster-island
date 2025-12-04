@@ -26,28 +26,6 @@ export interface Task {
   createdAt: Date;
 }
 
-// 習慣追蹤類型定義
-export interface Habit {
-  id: string;
-  name: string;
-  description?: string;
-  frequency: 'daily' | 'weekly';
-  targetDays: number[];
-  completedDates: Date[];
-  streak: number;
-  createdAt: Date;
-}
-
-// 時間追蹤類型定義
-export interface TimeEntry {
-  id: string;
-  taskId?: string;
-  description: string;
-  startTime: Date;
-  endTime?: Date;
-  duration: number; // 以分鐘為單位
-  tags: string[];
-}
 
 // 番茄鐘類型定義
 export type PomodoroMode = 'focus' | 'relax'; // 專注模式 / 悠閒模式

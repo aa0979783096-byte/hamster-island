@@ -3,8 +3,8 @@ import { useApp } from '../stores/AppContext';
 
 interface LayoutProps {
   children: ReactNode;
-  activeTab: 'tasks' | 'habits' | 'timer' | 'pomodoro' | 'hamster';
-  onTabChange: (tab: 'tasks' | 'habits' | 'timer' | 'pomodoro' | 'hamster') => void;
+  activeTab: 'pomodoro' | 'tasks' | 'map';
+  onTabChange: (tab: 'pomodoro' | 'tasks' | 'map') => void;
 }
 
 export const Layout = ({ children, activeTab, onTabChange }: LayoutProps) => {
@@ -34,34 +34,22 @@ export const Layout = ({ children, activeTab, onTabChange }: LayoutProps) => {
         flexWrap: 'nowrap',
       }}>
         <TabButton
-          active={activeTab === 'tasks'}
-          onClick={() => onTabChange('tasks')}
-        >
-          ✓ 任務管理
-        </TabButton>
-        <TabButton
-          active={activeTab === 'habits'}
-          onClick={() => onTabChange('habits')}
-        >
-          ⭐ 習慣追蹤
-        </TabButton>
-        <TabButton
-          active={activeTab === 'timer'}
-          onClick={() => onTabChange('timer')}
-        >
-          ⏱️ 時間追蹤
-        </TabButton>
-        <TabButton
           active={activeTab === 'pomodoro'}
           onClick={() => onTabChange('pomodoro')}
         >
-          🍅 番茄鐘
+          🏠 首頁
         </TabButton>
         <TabButton
-          active={activeTab === 'hamster'}
-          onClick={() => onTabChange('hamster')}
+          active={activeTab === 'tasks'}
+          onClick={() => onTabChange('tasks')}
         >
-          🏝️ 我的倉鼠島
+          📅 行事曆
+        </TabButton>
+        <TabButton
+          active={activeTab === 'map'}
+          onClick={() => onTabChange('map')}
+        >
+          🗺️ 地圖
         </TabButton>
       </nav>
 

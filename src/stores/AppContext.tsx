@@ -1,14 +1,12 @@
 import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Task, Habit, TimeEntry, PomodoroSession, HamsterProfile, Stats } from '../types';
+import type { Task, PomodoroSession, HamsterProfile, Stats } from '../types';
 import { storage } from '../utils/storage';
 import { calculateSeeds, calculateExp } from '../utils/rewards';
 import { DEFAULT_COLOR } from '../utils/colors';
 
 interface AppState {
   tasks: Task[];
-  habits: Habit[];
-  timeEntries: TimeEntry[];
   pomodoroSessions: PomodoroSession[];
   hamsterProfile: HamsterProfile;
   stats: Stats;
@@ -21,11 +19,6 @@ interface AppContextType {
   deleteTask: (id: string) => void;
   toggleTask: (id: string) => void;
   toggleSubTask: (taskId: string, subTaskId: string) => void;
-  addHabit: (habit: Habit) => void;
-  updateHabit: (id: string, updates: Partial<Habit>) => void;
-  deleteHabit: (id: string) => void;
-  startTimeTracking: (entry: Omit<TimeEntry, 'id' | 'duration' | 'endTime'>) => void;
-  stopTimeTracking: (id: string) => void;
   startPomodoro: (session: Omit<PomodoroSession, 'id' | 'endTime' | 'completed'>) => void;
   completePomodoro: (id: string) => void;
   updateHamsterProfile: (updates: Partial<HamsterProfile>) => void;
@@ -41,8 +34,6 @@ const migrateTasks = (tasks: Task[]): Task[] => {
 
 const initialState: AppState = {
   tasks: migrateTasks(storage.get<Task[]>('tasks') || []),
-  habits: storage.get<Habit[]>('habits') || [],
-  timeEntries: storage.get<TimeEntry[]>('timeEntries') || [],
   pomodoroSessions: storage.get<PomodoroSession[]>('pomodoroSessions') || [],
   hamsterProfile: storage.get<HamsterProfile>('hamsterProfile') || {
     name: '我的倉鼠',
@@ -154,46 +145,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     updateAndSave('tasks', newTasks);
   };
 
-  const addHabit = (habit: Habit) => {
-    const newHabits = [...state.habits, habit];
-    updateAndSave('habits', newHabits);
-  };
-
-  const updateHabit = (id: string, updates: Partial<Habit>) => {
-    const newHabits = state.habits.map(habit =>
-      habit.id === id ? { ...habit, ...updates } : habit
-    );
-    updateAndSave('habits', newHabits);
-  };
-
-  const deleteHabit = (id: string) => {
-    const newHabits = state.habits.filter(habit => habit.id !== id);
-    updateAndSave('habits', newHabits);
-  };
-
-  const startTimeTracking = (entry: Omit<TimeEntry, 'id' | 'duration' | 'endTime'>) => {
-    const newEntry: TimeEntry = {
-      ...entry,
-      id: Date.now().toString(),
-      duration: 0,
-      startTime: new Date(),
-    };
-    const newEntries = [...state.timeEntries, newEntry];
-    updateAndSave('timeEntries', newEntries);
-  };
-
-  const stopTimeTracking = (id: string) => {
-    const newEntries = state.timeEntries.map(entry => {
-      if (entry.id === id && !entry.endTime) {
-        const endTime = new Date();
-        const duration = Math.floor((endTime.getTime() - entry.startTime.getTime()) / 60000);
-        return { ...entry, endTime, duration };
-      }
-      return entry;
-    });
-    updateAndSave('timeEntries', newEntries);
-  };
-
   const startPomodoro = (session: Omit<PomodoroSession, 'id' | 'endTime' | 'completed'>) => {
     const newSession: PomodoroSession = {
       ...session,
@@ -226,11 +177,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         deleteTask,
         toggleTask,
         toggleSubTask,
-        addHabit,
-        updateHabit,
-        deleteHabit,
-        startTimeTracking,
-        stopTimeTracking,
         startPomodoro,
         completePomodoro,
         updateHamsterProfile,
