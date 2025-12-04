@@ -55,13 +55,18 @@ export const TasksPageNew = () => {
   };
 
   return (
-    <div>
+    <div style={{
+      width: '100%',
+      maxWidth: '1600px',
+      margin: '0 auto',
+      boxSizing: 'border-box',
+    }}>
       {/* 頁面標題 */}
       <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ margin: 0, color: '#FF9E5E', fontSize: '1.8rem' }}>
+        <h2 style={{ margin: 0, color: '#FF9E5E', fontSize: 'clamp(1.5rem, 3vw, 1.8rem)' }}>
           📅 行事曆
         </h2>
-        <p style={{ margin: '0.5rem 0 0 0', color: '#666' }}>
+        <p style={{ margin: '0.5rem 0 0 0', color: '#666', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
           點擊日期查看當天行程，管理您的任務與挑戰
         </p>
       </div>

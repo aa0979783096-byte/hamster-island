@@ -13,13 +13,18 @@ export const MapPage = () => {
 
   return (
     <div style={{
-      minHeight: '100vh',
+      minHeight: 'calc(100vh - 200px)',
       background: 'linear-gradient(180deg, #87CEEB 0%, #B0E0E6 50%, #ADD8E6 100%)',
-      padding: '2rem',
+      padding: 'clamp(1rem, 3vw, 2rem)',
+      margin: '-2rem',
+      marginTop: '-1rem',
+      boxSizing: 'border-box',
     }}>
       <div style={{
-        maxWidth: '1200px',
+        maxWidth: '1400px',
         margin: '0 auto',
+        width: '100%',
+        padding: 'clamp(1rem, 3vw, 2rem)',
       }}>
         <h2 style={{
           textAlign: 'center',
