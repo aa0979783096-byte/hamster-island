@@ -57,8 +57,7 @@ export const TasksPageNew = () => {
   return (
     <div style={{
       width: '100%',
-      maxWidth: '1600px',
-      margin: '0 auto',
+      minHeight: '100%',
       boxSizing: 'border-box',
     }}>
       {/* 頁面標題 */}

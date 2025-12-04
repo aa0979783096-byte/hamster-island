@@ -11,14 +11,21 @@ export const Layout = ({ children, activeTab, onTabChange }: LayoutProps) => {
   const { state } = useApp();
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      width: '100vw',
+      overflow: 'hidden',
+    }}>
       {/* 標題列 */}
       <header style={{
         padding: 'clamp(0.75rem, 2vw, 1rem)',
         background: '#FF9E5E',
         color: 'white',
         textAlign: 'center',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+        flexShrink: 0,
       }}>
         <h1 style={{ margin: 0, fontSize: 'clamp(1.3rem, 4vw, 1.75rem)' }}>🐹 倉鼠島生產力工具</h1>
       </header>
@@ -32,6 +39,7 @@ export const Layout = ({ children, activeTab, onTabChange }: LayoutProps) => {
         borderBottom: '2px solid #FF9E5E',
         overflowX: 'auto',
         flexWrap: 'nowrap',
+        flexShrink: 0,
       }}>
         <TabButton
           active={activeTab === 'pomodoro'}
@@ -56,6 +64,7 @@ export const Layout = ({ children, activeTab, onTabChange }: LayoutProps) => {
       {/* 主要內容區 */}
       <main style={{
         flex: 1,
+        width: '100%',
         padding: 'clamp(1rem, 3vw, 2rem)',
         overflow: 'auto',
         background: '#FFFAF0',

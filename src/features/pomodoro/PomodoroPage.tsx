@@ -173,9 +173,8 @@ export const PomodoroPage = () => {
       flexDirection: 'column',
       alignItems: 'center',
       padding: 'clamp(1rem, 3vw, 2rem)',
-      maxWidth: '800px',
-      margin: '0 auto',
       width: '100%',
+      minHeight: '100%',
       boxSizing: 'border-box',
     }}>
       <h2 style={{ color: '#FF9E5E', marginBottom: '2rem' }}>🍅 倉鼠島番茄鐘</h2>
